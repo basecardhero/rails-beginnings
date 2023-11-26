@@ -53,6 +53,9 @@ group :development do
   # Source https://github.com/rubocop/rubocop-rails
   gem 'rubocop-rails', require: false
 
+  # Source https://github.com/rubocop/rubocop-md
+  gem "rubocop-md", require: false
+  
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
