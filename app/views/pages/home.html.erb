@@ -1,0 +1,6 @@
+<h1>Rails Beginnings</h1>
+<div id="app"></div>
+
+<% content_for :scripts do %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+<% end %>
