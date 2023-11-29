@@ -44,7 +44,7 @@ bundle install
 
 **4. Install javascript packages**
 ```
-yarn
+yarn install
 ```
 
 **5. Start the application**
@@ -57,6 +57,7 @@ Visit [localhost:3000](http://localhost:3000)
 ### Development Testing
 
 **Rails tests**
+If you haven't ran `bin/dev` yet, either run `bin/dev` or `yarn build:all` to compile assets.
 ```
 bin/rspec
 ```
