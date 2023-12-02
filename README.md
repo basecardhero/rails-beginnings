@@ -1,5 +1,7 @@
 # Rails Beginnings
 
+[![Javascript Linting & Tests](https://github.com/basecardhero/rails-beginnings/actions/workflows/javascript.yml/badge.svg)](https://github.com/basecardhero/rails-beginnings/actions/workflows/javascript.yml) [![Ruby Linting & Tests](https://github.com/basecardhero/rails-beginnings/actions/workflows/ruby.yml/badge.svg)](https://github.com/basecardhero/rails-beginnings/actions/workflows/ruby.yml)
+
 A starter application to learn Ruby on Rails with React (webpack + yarn).
 
 _Nothing fancy._
