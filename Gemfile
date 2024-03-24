@@ -41,6 +41,9 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Used for password digest in authentication.
+gem "bcrypt", "~> 3.1"
+
 group :development, :test do
   # See https://github.com/rspec/rspec-rails
   gem "rspec-rails", "~> 6.1"
