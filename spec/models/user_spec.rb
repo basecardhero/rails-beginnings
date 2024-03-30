@@ -16,9 +16,8 @@ RSpec.describe User, type: :model do
       it { should validate_presence_of(:email) }
       it { should normalize(:email).from(" JoHN.Doe@EXAMPLE.com \n ").to("john.doe@example.com") }
       it "will validate email format" do
-        user = FactoryBot.build(:user, email: "not_an_email")
-        user.valid?
-        expect(user.errors.count).to be(1)
+        user = build(:user, email: "not_an_email")
+        expect(user).to_not be_valid
         expect(user.errors.first.full_message).to eq("Email is invalid")
       end
     end
