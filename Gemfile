@@ -49,6 +49,16 @@ group :development, :test do
   gem "rspec-rails", "~> 6.1"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+
+  # See https://github.com/thoughtbot/factory_bot
+  # See https://github.com/thoughtbot/factory_bot_rails
+  gem "factory_bot_rails"
+
+  # See https://github.com/faker-ruby/faker
+  gem "faker"
+
+  # See https://github.com/thoughtbot/shoulda-matchers
+  gem "shoulda-matchers"
 end
 
 group :development do
