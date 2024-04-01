@@ -11,6 +11,17 @@
   </head>
 
   <body>
+    <div><%=notice %></div>
+    <div><%=alert %></div>
+
+    <% if user_signed_in? %>
+      <%= link_to "Profile", "#" %>
+      <%= button_to "Log out", "#" %>
+    <% else %>
+      <%= link_to "Register", register_path %>
+      <%= link_to "Log in", "" %>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

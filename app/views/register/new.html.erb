@@ -1,0 +1,48 @@
+<h1>Register</h1>
+<div>
+  <%= form_with model: @user, url: register_path do |form| %>
+    <div>
+      <%= form.label :email %>
+      <%= form.email_field :email %>
+      <% if form.object.errors.include? :email %>
+        <div style="color: #ff0000;">
+          <%= form.object.errors.full_messages_for(:email).first %>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :username %>
+      <%= form.text_field :username %>
+      <% if form.object.errors.include? :username %>
+        <div style="color: #ff0000;">
+          <%= form.object.errors.full_messages_for(:username).first %>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+      <% if form.object.errors.include? :password %>
+        <div style="color: #ff0000;">
+          <%= form.object.errors.full_messages_for(:password).first %>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation %>
+      <% if form.object.errors.include? :password_confirmation %>
+        <div style="color: #ff0000;">
+          <%= form.object.errors.full_messages_for(:password_confirmation).first %>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.submit "Register" %>  
+    </div>
+  <% end %>
+</div>
