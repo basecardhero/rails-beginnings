@@ -1,0 +1,28 @@
+<h1>Log in</h1>
+<div>
+  <%= form_with model: @user, url: login_path do |form| %>
+    <div>
+      <%= form.label :email %>
+      <%= form.email_field :email %>
+      <% if form.object.errors.include? :email %>
+        <div style="color: #ff0000;">
+          <%= form.object.errors.full_messages_for(:email).first %>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+      <% if form.object.errors.include? :password %>
+        <div style="color: #ff0000;">
+          <%= form.object.errors.full_messages_for(:password).first %>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.submit "Log in" %>  
+    </div>
+  <% end %>
+</div>
