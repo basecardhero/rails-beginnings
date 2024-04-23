@@ -17,6 +17,18 @@ RSpec.describe LoginForm do
     end
 
     describe ".email" do
+      it "will validate presence of email" do
+        login_form.email = nil
+        expect(login_form.valid?).to be false
+        expect(login_form.errors.where(:email).first.full_message).to eq "Email can't be blank"
+      end
+
+      it "will validate presence of email" do
+        login_form.email = ""
+        expect(login_form.valid?).to be false
+        expect(login_form.errors.where(:email).first.full_message).to eq "Email can't be blank"
+      end
+
       it "will validate email format" do
         login_form.email = "not_an_email"
         expect(login_form.valid?).to be false

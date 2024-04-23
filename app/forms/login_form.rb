@@ -4,10 +4,15 @@ class LoginForm
   attr_accessor :password
   attr_reader :email
 
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates_presence_of :email
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, if: -> { email.present? }
   validates :password, presence: true
 
   def email=(email)
-    @email = email.strip.downcase
+    if email.present?
+      @email = email.strip.downcase
+    else
+      @email = email
+    end
   end
 end
