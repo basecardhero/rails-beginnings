@@ -1,6 +1,6 @@
 <h1>Log in</h1>
 <div>
-  <%= form_with model: @user, url: login_path do |form| %>
+  <%= form_with model: @login_form, url: login_path do |form| %>
     <div>
       <%= form.label :email %>
       <%= form.email_field :email %>
