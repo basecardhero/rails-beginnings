@@ -41,11 +41,24 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Used for password digest in authentication.
+gem "bcrypt", "~> 3.1"
+
 group :development, :test do
   # See https://github.com/rspec/rspec-rails
   gem "rspec-rails", "~> 6.1"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+
+  # See https://github.com/thoughtbot/factory_bot
+  # See https://github.com/thoughtbot/factory_bot_rails
+  gem "factory_bot_rails"
+
+  # See https://github.com/faker-ruby/faker
+  gem "faker"
+
+  # See https://github.com/thoughtbot/shoulda-matchers
+  gem "shoulda-matchers"
 end
 
 group :development do

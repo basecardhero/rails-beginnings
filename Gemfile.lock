@@ -79,6 +79,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     base64 (0.2.0)
+    bcrypt (3.1.20)
     bigdecimal (3.1.7)
     bindex (0.8.1)
     bootsnap (1.18.3)
@@ -105,6 +106,13 @@ GEM
     diff-lcs (1.5.1)
     drb (2.2.1)
     erubi (1.12.0)
+    factory_bot (6.4.6)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
+    faker (3.3.0)
+      i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.4)
@@ -252,6 +260,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    shoulda-matchers (6.2.0)
+      activesupport (>= 5.2.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -288,10 +298,13 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  bcrypt (~> 3.1)
   bootsnap
   capybara
   cssbundling-rails
   debug
+  factory_bot_rails
+  faker
   jbuilder
   jsbundling-rails
   puma (>= 5.0)
@@ -301,6 +314,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   selenium-webdriver
+  shoulda-matchers
   sprockets-rails
   sqlite3 (~> 1.4)
   tzinfo-data
