@@ -19,7 +19,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to new_session_url
     assert_nil parsed_cookies.signed[:session_id]
-    assert_equal "Try another email address or password.", flash[:alert]
+    assert_equal "Invalid email or password.", flash[:alert]
   end
 
   test "destroy" do
