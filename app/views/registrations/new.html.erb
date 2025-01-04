@@ -1,0 +1,44 @@
+<div class="w-full">
+  <%= form_for @user, url: registrations_path do |form| %>
+    <div class="mb-6">
+      <%= form.label :email_address, "Email" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", value: @user.email_address, class: "form-text" %>
+      
+      <% if @user.errors[:email_address].any? %>
+        <p class="text-red-500 text-sm mt-1">
+          <%= @user.errors.full_messages_for(:email_address).first %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="mb-6">
+      <%= form.label :password, "Password" %>
+      <%= form.password_field :password, required: true, maxlength: 72, class: "form-text" %>
+      
+      <% if @user.errors[:password].any? %>
+        <p class="text-red-500 text-sm mt-1">
+          <%= @user.errors.full_messages_for(:password).first %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="mb-6">
+      <%= form.label :password_confirmation, "Confirm password" %>
+      <%= form.password_field :password_confirmation, required: true, maxlength: 72, class: "form-text" %>
+      
+      <% if @user.errors[:password_confirmation].any? %>
+        <p class="text-red-500 text-sm mt-1">
+          <%= @user.errors.full_messages_for(:password_confirmation).first %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <%= link_to "Already have an account?", new_session_path, class: "form-link" %>
+
+      <div>
+        <%= form.submit "Register", class: "form-button" %>
+      </div>
+    </div>
+  <% end %>
+</div>
