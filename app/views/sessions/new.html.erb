@@ -1,20 +1,20 @@
 <div class="w-full">
   <%= form_with url: session_url, class: "contents" do |form| %>
     <div class="mb-6">
-      <%= form.label :email_address, "E-Mail" %>
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "form-text" %>
+      <%= form.label :email_address, "Email" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "form-text" %>
     </div>
 
     <div class="mb-6">
       <%= form.label :password %>
-      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "form-text" %>
+      <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72, class: "form-text" %>
     </div>
 
     <div class="flex justify-between items-center">
       <%= link_to "Forgot your password?", new_password_path, class: "form-link" %>
 
       <div class="inline">
-        <%= form.submit "Sign in", class: "form-button" %>
+        <%= form.submit "Log in", class: "form-button" %>
       </div>
     </div>
   <% end %>
