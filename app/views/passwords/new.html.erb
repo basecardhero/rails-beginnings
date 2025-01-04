@@ -2,8 +2,8 @@
   <%= form_with url: passwords_path, class: "contents" do |form| %>
     <p class="mb-5"><strong>Forgot your password?</strong> No problem! Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
     <div class="mb-5">
-      <%= form.label :email_address, "E-Mail", class: "text-gray-800" %>
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "form-text" %>
+      <%= form.label :email_address, "Email", class: "text-gray-800" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "form-text" %>
     </div>
 
     <div class="flex justify-end items-center">

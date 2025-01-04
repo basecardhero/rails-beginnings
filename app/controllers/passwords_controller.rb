@@ -18,11 +18,11 @@ class PasswordsController < ApplicationController
   end
 
   def update
-    if @user.update(params.permit(:password, :password_confirmation))
-      redirect_to new_session_path, notice: "Password has been reset."
-    else
-      redirect_to edit_password_path(params[:token]), alert: "Passwords did not match."
+    if @user.update(update_password_params)
+      return redirect_to new_session_path, notice: "Password has been reset."
     end
+
+    render :edit, status: :unprocessable_entity
   end
 
   private
@@ -30,5 +30,9 @@ class PasswordsController < ApplicationController
       @user = User.find_by_password_reset_token!(params[:token])
     rescue ActiveSupport::MessageVerifier::InvalidSignature
       redirect_to new_password_path, alert: "Password reset link is invalid or has expired."
+    end
+
+    def update_password_params
+      params.require(:user).permit(:password, :password_confirmation)
     end
 end
