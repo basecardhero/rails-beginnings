@@ -34,5 +34,6 @@ class PasswordsController < ApplicationController
 
     def update_password_params
       params.require(:user).permit(:password, :password_confirmation)
+        .with_defaults(password_confirmation: "")
     end
 end
