@@ -52,6 +52,6 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     assert_response :unprocessable_entity
-    assert response.body.include?("Password confirmation doesn&#39;t match Password")
+    assert response.parsed_body.to_html.include?("Password confirmation doesn't match Password")
   end
 end
