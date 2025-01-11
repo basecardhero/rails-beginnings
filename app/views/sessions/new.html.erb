@@ -1,13 +1,25 @@
 <div class="w-full">
-  <%= form_with url: session_url, class: "contents" do |form| %>
+  <%= form_with model: @new_session_form, url: session_url, class: "contents" do |form| %>
     <div class="mb-6">
       <%= form.label :email_address, "Email" %>
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "form-text" %>
+      <%= form.text_field :email_address, required: true, autofocus: true, autocomplete: "username", value: @new_session_form.email_address, class: "form-text" %>
+      
+      <% if @new_session_form.errors[:email_address].any? %>
+        <p class="text-red-500 text-sm mt-1">
+          <%= @new_session_form.errors.full_messages_for(:email_address).first %>
+        </p>
+      <% end %>
     </div>
 
     <div class="mb-6">
       <%= form.label :password %>
       <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72, class: "form-text" %>
+
+      <% if @new_session_form.errors[:password].any? %>
+        <p class="text-red-500 text-sm mt-1">
+          <%= @new_session_form.errors.full_messages_for(:password).first %>
+        </p>
+      <% end %>
     </div>
 
     <div class="flex justify-between items-center">
