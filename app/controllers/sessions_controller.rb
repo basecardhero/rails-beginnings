@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     end
 
     if user = User.authenticate_by(new_session_params)
-      start_new_session_for(user)
+      start_new_session_for(user, permanent: remember_me?)
       redirect_to root_url
     else
       redirect_to new_session_path, alert: "Invalid email or password."
@@ -30,5 +30,11 @@ class SessionsController < ApplicationController
 
   def new_session_params
     params.expect(new_session_form: [ :email_address, :password ])
+  end
+
+  def remember_me?
+    return false unless params[:new_session_form].key?(:remember_me)
+
+    params[:new_session_form][:remember_me] == "1"
   end
 end

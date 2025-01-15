@@ -22,6 +22,13 @@
       <% end %>
     </div>
 
+    <div class="mb-6">
+      <label class="flex items-center">
+        <%= form.check_box :remember_me, class: "border rounded-sm border-gray-300 focus:border-gray-100 outline-none p-2" %>
+        <span class="ml-2">Remember me</span>
+      </label>
+    </div>
+
     <div class="flex justify-between items-center">
       <%= link_to "Forgot your password?", new_password_path, class: "form-link" %>
 

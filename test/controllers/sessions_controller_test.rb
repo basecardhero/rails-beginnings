@@ -7,10 +7,20 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create with valid credentials" do
-    post session_url, params: { new_session_form: { email_address: "one@example.com", password: "password" } }
+    post session_url, params: { new_session_form: { email_address: "one@example.com", password: "password", remember_me: "0" } }
 
     assert_redirected_to root_url
     assert parsed_cookies.signed[:session_id]
+    assert_nil cookies.get_cookie("session_id").expires
+    assert_nil flash[:alert]
+  end
+
+  test "create with valid credentials and remember me" do
+    post session_url, params: { new_session_form: { email_address: "one@example.com", password: "password", remember_me: "1" } }
+
+    assert_redirected_to root_url
+    assert parsed_cookies.signed[:session_id]
+    assert cookies.get_cookie("session_id").expires
     assert_nil flash[:alert]
   end
 
