@@ -7,15 +7,18 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create a new user" do
-    post registrations_url, params: {
+    assert_emails 1 do
+      post registrations_url, params: {
         user: {
           email_address: "john.doe.123@example.com",
           password: "password123",
           password_confirmation: "password123"
         }
       }
+    end
+
     assert_redirected_to new_session_url
-    assert_equal "Your account was successfully created! You may now log in.", flash[:notice]
+    assert_equal "You have successfully registered! Please check your email to confirm your email address.", flash[:notice]
     assert_not_nil User.find_by(email_address: "john.doe.123@example.com")
   end
 
@@ -53,5 +56,22 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
       }
     assert_response :unprocessable_entity
     assert response.parsed_body.to_html.include?("Password confirmation doesn't match Password")
+  end
+
+  test "confirm a successful email confirmation" do
+    user = users(:one)
+    orignal_confirmed_at = user.confirmed_at
+    get confirm_registrations_url(user.generate_token_for(:email_confirmation))
+
+    assert_redirected_to new_session_url
+    assert_equal "Your email has been confirmed. You may now log in.", flash[:notice]
+    assert_not_equal orignal_confirmed_at, user.reload.confirmed_at
+  end
+
+  test "confirm will flash a message if invalid token" do
+    get confirm_registrations_url("not_a_valid_token")
+
+    assert_redirected_to new_session_url
+    assert_equal "The confirmation link is invalid or expired.", flash[:alert]
   end
 end

@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   layout "authentication"
-  allow_unauthenticated_access only: %i[ new create ]
+  allow_unauthenticated_access only: %i[ new create confirm ]
 
   def new
     @user = User.new
@@ -9,10 +9,22 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(create_user_params)
     if @user.save
-      return redirect_to new_session_url, notice: "Your account was successfully created! You may now log in."
+      UserMailer.confirm_email(@user).deliver_later
+
+      return redirect_to new_session_url, notice: "You have successfully registered! Please check your email to confirm your email address."
     end
 
     render :new, status: :unprocessable_entity
+  end
+
+  def confirm
+    user = User.find_by_token_for(:email_confirmation, params[:token])
+    if user.nil?
+      return redirect_to new_session_url, alert: "The confirmation link is invalid or expired."
+    end
+
+    user.update! confirmed_at: Time.current
+    redirect_to new_session_url, notice: "Your email has been confirmed. You may now log in."
   end
 
   private

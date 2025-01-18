@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
-  resources :registrations, only: %i[ new create ]
+  resources :registrations, only: %i[ new create ] do
+    get "confirm/:token", action: :confirm, on: :collection, as: :confirm
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
