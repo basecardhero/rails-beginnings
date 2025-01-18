@@ -2,14 +2,12 @@
 
 [![CI](https://github.com/basecardhero/rails-beginnings/actions/workflows/ci.yml/badge.svg)](https://github.com/basecardhero/rails-beginnings/actions/workflows/ci.yml)
 
-A Ruby on Rails beginner application.
+A beginner Ruby on Rails application I created to learn [Ruby](https://www.ruby-lang.org/en/), [Ruby on Rails](https://rubyonrails.org/), and [SQLite](https://www.sqlite.org/index.html).
 
-This is a project I created to learn Ruby and Ruby on Rails.
-
-- User authentication flow
-  - User registration (email confirmation)
-  - User login
-  - Password reset
+### Objectives
+- [X] Create a user authentication via `bin/rails generate authentication`.
+- [ ] Create a user profile page.
+- [ ] ...
 
 ## Quick Start
 
@@ -18,7 +16,7 @@ This is a project I created to learn Ruby and Ruby on Rails.
 1. Run `bin/rails db:migrate` to create and/or run database migrations.
 1. Run `bin/dev` to start the development environment.
 1. Visit [http://localhost:3000](http://localhost:3000).
-1. [Register](http://localhost:3000/registrations/new) a new user. _When registering a new user, the confirmation email will be available within your console. This will allow you to log in._
+1. [Register](http://localhost:3000/registrations/new) a new user. _When registering a new user, the confirmation email will be available within your console logs. This will allow you to log in._
 
 ## Development
 
@@ -34,19 +32,19 @@ See [.ruby-version](.ruby-version) for the current Ruby version.
 
 ### Testing
 
-#### Unit tests
+#### Run unit tests
 The project uses default Rails mini test as the test library.
 ```
 bin/rails test
 ```
 
-#### Syntax
+#### Run a syntax check
 To run Rubocop
 ```
 bundle exec rubocop
 ```
 
-#### Security
+#### Run a security scan
 To run Brakeman
 ```
 bin/brakeman --no-pager
@@ -54,4 +52,12 @@ bin/brakeman --no-pager
 
 ## Deployment
 
-Yet to come...
+This will eventually use [Kamal](https://kamal-deploy.org/).
+
+## Security
+
+If you discover any security related issues, please email ryan@basecardhero.com instead of using the issue tracker.
+
+## License
+
+The [MIT License (MIT)](https://opensource.org/license/MIT). Please see [License File](LICENSE) for more information.
