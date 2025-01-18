@@ -14,6 +14,8 @@ class SessionsController < ApplicationController
     end
 
     if user = User.authenticate_by(new_session_params)
+      return redirect_to new_session_path, alert: "You must confirm your email before you can log in" if user.confirmed_at.nil?
+
       start_new_session_for(user, permanent: remember_me?)
       redirect_to root_url
     else

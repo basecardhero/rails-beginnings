@@ -7,7 +7,8 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create with valid credentials" do
-    post session_url, params: { new_session_form: { email_address: "one@example.com", password: "password", remember_me: "0" } }
+    user = users(:confirmed)
+    post session_url, params: { new_session_form: { email_address: user.email_address, password: "password123", remember_me: "0" } }
 
     assert_redirected_to root_url
     assert parsed_cookies.signed[:session_id]
@@ -16,7 +17,8 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create with valid credentials and remember me" do
-    post session_url, params: { new_session_form: { email_address: "one@example.com", password: "password", remember_me: "1" } }
+    user = users(:confirmed)
+    post session_url, params: { new_session_form: { email_address: user.email_address, password: "password123", remember_me: "1" } }
 
     assert_redirected_to root_url
     assert parsed_cookies.signed[:session_id]
@@ -32,14 +34,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Invalid email or password.", flash[:alert]
   end
 
-  test "create will show validation errors" do
-    post session_url, params: { new_session_form: { email_address: "one@example.com", password: "wrong" } }
-
-    assert_redirected_to new_session_url
-    assert_nil parsed_cookies.signed[:session_id]
-    assert_equal "Invalid email or password.", flash[:alert]
-  end
-
   test "create will show form errors" do
     post session_url, params: { new_session_form: { email_address: "ad.ee.com" } }
 
@@ -48,8 +42,17 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert response.parsed_body.to_html.include?("Password can't be blank")
   end
 
+  test "create will not create a session if confirmed_at is nil" do
+    user = users(:one)
+    post session_url, params: { new_session_form: { email_address: user.email_address, password: "password123", remember_me: "0" } }
+
+    assert_redirected_to new_session_url
+    assert_nil parsed_cookies.signed[:session_id]
+    assert_equal "You must confirm your email before you can log in", flash[:alert]
+  end
+
   test "destroy" do
-    sign_in :one
+    sign_in :confirmed
 
     delete session_url
 
