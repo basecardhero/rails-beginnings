@@ -11,4 +11,8 @@ class User < ApplicationRecord
     if: -> { new_record? || changes[:password_digest] }
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  generates_token_for :email_confirmation, expires_in: 1.day do
+    confirmed_at
+  end
 end

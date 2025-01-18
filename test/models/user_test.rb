@@ -46,4 +46,28 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.valid?
     assert_equal user.errors[:password_confirmation], [ "doesn't match Password" ]
   end
+
+  test "generates_token_for email_confirmation will return the user for a valid token" do
+    user = users(:one)
+    token = user.generate_token_for(:email_confirmation)
+
+    assert_equal user.id, User.find_by_token_for(:email_confirmation, token).id
+  end
+
+  test "generates_token_for email_confirmation will not work if confirmed_at has changed" do
+    user = users(:one)
+    token = user.generate_token_for(:email_confirmation)
+    user.update(confirmed_at: Time.current)
+
+    assert_nil User.find_by_token_for(:email_confirmation, token)
+  end
+
+  test "generates_token_for email_confirmation will not work if token is expired" do
+    user = users(:one)
+    token = user.generate_token_for(:email_confirmation)
+
+    travel_to Time.current + 2.days do
+      assert_nil User.find_by_token_for(:email_confirmation, token)
+    end
+  end
 end
