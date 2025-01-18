@@ -56,6 +56,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
     delete session_url
 
+    assert_equal response.headers["clear-site-data"], "\"cache\",\"storage\""
     assert_redirected_to new_session_url
     assert_empty cookies[:session_id]
   end
