@@ -1,0 +1,5 @@
+<p>Welcome!</p>
+
+<p>Please click the link below to confirm your email address.</p>
+
+<%= link_to("Confirm my email", confirm_registrations_url(@user.generate_token_for(:email_confirmation))) %>
