@@ -1,24 +1,57 @@
-# README
+# Rails Beginnings
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![CI](https://github.com/basecardhero/rails-beginnings/actions/workflows/ci.yml/badge.svg)](https://github.com/basecardhero/rails-beginnings/actions/workflows/ci.yml)
 
-Things you may want to cover:
+A Ruby on Rails beginner application.
 
-* Ruby version
+This is a project I created to learn Ruby and Ruby on Rails.
 
-* System dependencies
+- User authentication flow
+  - User registration (email confirmation)
+  - User login
+  - Password reset
 
-* Configuration
+## Quick Start
 
-* Database creation
+1. Clone the repository and move into the direct via command line.
+1. Run `bundle` to install Gemfile dependencies.
+1. Run `bin/rails db:migrate` to create and/or run database migrations.
+1. Run `bin/dev` to start the development environment.
+1. Visit [http://localhost:3000](http://localhost:3000).
+1. [Register](http://localhost:3000/registrations/new) a new user. _When registering a new user, the confirmation email will be available within your console. This will allow you to log in._
 
-* Database initialization
+## Development
 
-* How to run the test suite
+### Ruby Version
 
-* Services (job queues, cache servers, search engines, etc.)
+See [.ruby-version](.ruby-version) for the current Ruby version.
 
-* Deployment instructions
+### Setup
 
-* ...
+1. Clone the repository and move into the direct via command line.
+1. Run `bundle` to install Gemfile dependencies.
+1. Run `bin/rails db:migrate` to create and/or run database migrations.
+
+### Testing
+
+#### Unit tests
+The project uses default Rails mini test as the test library.
+```
+bin/rails test
+```
+
+#### Syntax
+To run Rubocop
+```
+bundle exec rubocop
+```
+
+#### Security
+To run Brakeman
+```
+bin/brakeman --no-pager
+```
+
+## Deployment
+
+Yet to come...
