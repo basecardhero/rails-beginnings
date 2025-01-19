@@ -39,7 +39,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     patch password_url(user.password_reset_token), params: { user: { password: "newpassword", password_confirmation: "newpassword" } }
 
     assert_redirected_to new_session_url
-    assert_equal "Password has been reset.", flash[:notice]
+    assert_equal "Your password has been reset. You may now log in.", flash[:notice]
     assert user.reload.authenticate("newpassword")
   end
 
