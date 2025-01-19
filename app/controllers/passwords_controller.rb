@@ -19,7 +19,7 @@ class PasswordsController < ApplicationController
 
   def update
     if @user.update(update_password_params)
-      return redirect_to new_session_path, notice: "Password has been reset."
+      return redirect_to new_session_path, notice: "Your password has been reset. You may now log in."
     end
 
     render :edit, status: :unprocessable_entity
