@@ -2,14 +2,17 @@
 
 one:
   email_address: one@example.com
+  username: "UserOne123"
   password_digest: <%= password_digest %>
   confirmed_at: <%= Time.current %>
 
 confirmed:
   email_address: confirmed@example.com
+  username: "ConfirmedUser"
   password_digest: <%= password_digest %>
   confirmed_at: <%= Time.current %>
   
 unconfirmed:
   email_address: unconfirmed@example.com
+  username: "UnconfirmedUser"
   password_digest: <%= password_digest %>
