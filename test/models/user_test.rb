@@ -11,18 +11,18 @@ class UserTest < ActiveSupport::TestCase
     assert user.valid?
   end
 
-  test "email address normalization" do
+  test "email_address normalization" do
     user = User.new(email_address: "  John.Doe@EXAMPLE.COM  \n ", password: "password123")
     assert_equal(user.email_address, "john.doe@example.com")
   end
 
-  test "email address must be valid" do
+  test "email_address must be valid" do
     user = User.new(email_address: "not.an.email", password: "password123")
     assert_not user.valid?
     assert_equal user.errors[:email_address], [ "is invalid" ]
   end
 
-  test "email must be unique" do
+  test "email_address must be unique" do
     User.create(email_address: "John.Doe@EXAMPLE.com", password: "password123")
     other_user = User.new(email_address: "john.doe@example.com", password: "password123")
     assert_not other_user.valid?
