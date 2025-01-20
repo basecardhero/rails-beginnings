@@ -43,7 +43,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create will not create a session if confirmed_at is nil" do
-    user = users(:one)
+    user = users(:unconfirmed)
     post session_url, params: { new_session_form: { email_address: user.email_address, password: "password123", remember_me: "0" } }
 
     assert_redirected_to new_session_url
