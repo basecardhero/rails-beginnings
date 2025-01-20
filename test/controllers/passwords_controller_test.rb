@@ -34,13 +34,14 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "a password can be updated" do
-    user = users(:one)
-
+    user = users(:confirmed)
+    old_confirmed_at = user.confirmed_at
     patch password_url(user.password_reset_token), params: { user: { password: "newpassword", password_confirmation: "newpassword" } }
 
     assert_redirected_to new_session_url
     assert_equal "Your password has been reset. You may now log in.", flash[:notice]
     assert user.reload.authenticate("newpassword")
+    assert_not_equal old_confirmed_at, user.reload.confirmed_at
   end
 
   test "a password cannot be updated with invalid token" do
