@@ -4,6 +4,10 @@ one:
   email_address: one@example.com
   password_digest: <%= password_digest %>
 
+unconfirmed:
+  email_address: unconfirmed@example.com
+  password_digest: <%= password_digest %>
+
 confirmed:
   email_address: confirmed@example.com
   password_digest: <%= password_digest %>
