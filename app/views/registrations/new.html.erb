@@ -12,6 +12,17 @@
     </div>
 
     <div class="mb-6">
+      <%= form.label :username, "Username" %>
+      <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username", value: @user.username, class: "form-text" %>
+
+      <% if @user.errors[:username].any? %>
+        <p class="text-red-500 text-sm mt-1">
+          <%= @user.errors.full_messages_for(:username).first %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="mb-6">
       <%= form.label :password, "Password" %>
       <%= form.password_field :password, required: true, maxlength: 72, class: "form-text" %>
       

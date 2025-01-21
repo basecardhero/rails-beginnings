@@ -11,6 +11,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
       post registrations_url, params: {
         user: {
           email_address: "john.doe.123@example.com",
+          username: "JohnDoe123",
           password: "password123",
           password_confirmation: "password123"
         }
@@ -26,12 +27,25 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     post registrations_url, params: {
         user: {
           email_address: "john.doe.123",
+          username: "JohnDoe123",
           password: "password123",
           password_confirmation: "password123"
         }
       }
     assert_response :unprocessable_entity
     assert response.body.include?("Email address is invalid")
+  end
+
+  test "should show an error message when username is invalid" do
+    post registrations_url, params: {
+        user: {
+          email_address: "john.doe.123@example.com",
+          password: "password123",
+          password_confirmation: "password123"
+        }
+      }
+    assert_response :unprocessable_entity
+    assert response.body.include?("Username is too short (minimum is 7 characters)")
   end
 
   test "should show an error message when password is invalid" do

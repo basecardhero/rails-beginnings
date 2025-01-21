@@ -5,6 +5,7 @@ class RegistrationsTest < ApplicationSystemTestCase
     visit new_registration_url
 
     fill_in "Email", with: "john.doe@example.com"
+    fill_in "Username", with: "JohnDoe123"
     fill_in "Password", with: "password123"
     fill_in "Confirm password", with: "password123"
 
@@ -18,6 +19,7 @@ class RegistrationsTest < ApplicationSystemTestCase
     visit new_registration_url
 
     fill_in "Email", with: "john.doe@example.com"
+    fill_in "Username", with: "JohnDoe123"
     fill_in "Password", with: "password123"
     fill_in "Confirm password", with: "NOT_password123"
 
@@ -31,6 +33,7 @@ class RegistrationsTest < ApplicationSystemTestCase
     visit new_registration_url
 
     fill_in "Email", with: users(:confirmed).email_address
+    fill_in "Username", with: "JohnDoe123"
     fill_in "Password", with: "password123"
     fill_in "Confirm password", with: "password123"
 
@@ -38,6 +41,19 @@ class RegistrationsTest < ApplicationSystemTestCase
 
     assert_current_path new_registration_url
     assert_text "Email address has already been taken"
+  end
+
+  test "when an existing username is used, it will display the error message" do
+    visit new_registration_url
+
+    fill_in "Email", with: "john.doe@example.com"
+    fill_in "Username", with: users(:confirmed).username
+    fill_in "Password", with: "password123"
+    fill_in "Confirm password", with: "password123"
+    click_on "Register"
+
+    assert_current_path new_registration_url
+    assert_text "Username has already been taken"
   end
 
   test "email confirmation when successfull" do

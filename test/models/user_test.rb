@@ -2,47 +2,80 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   test "valid user" do
-    user = User.new(email_address: "john.doe@example.com", password: "password123")
+    user = User.new(email_address: "john.doe@example.com", username: "JohnDoe123", password: "password123")
     assert user.valid?
   end
 
   test "valid user with password_confirmation" do
-    user = User.new(email_address: "john.doe@example.com", password: "password123", password_confirmation: "password123")
+    user = User.new(email_address: "john.doe@example.com", username: "JohnDoe123", password: "password123", password_confirmation: "password123")
     assert user.valid?
   end
 
-  test "email address normalization" do
-    user = User.new(email_address: "  John.Doe@EXAMPLE.COM  \n ", password: "password123")
+  test "email_address normalization" do
+    user = User.new(email_address: "  John.Doe@EXAMPLE.COM  \n ", username: "JohnDoe123", password: "password123")
     assert_equal(user.email_address, "john.doe@example.com")
   end
 
-  test "email address must be valid" do
-    user = User.new(email_address: "not.an.email", password: "password123")
+  test "email_address must be valid" do
+    user = User.new(email_address: "not.an.email", username: "JohnDoe123", password: "password123")
     assert_not user.valid?
     assert_equal user.errors[:email_address], [ "is invalid" ]
   end
 
-  test "email must be unique" do
-    User.create(email_address: "John.Doe@EXAMPLE.com", password: "password123")
-    other_user = User.new(email_address: "john.doe@example.com", password: "password123")
+  test "email_address must be unique" do
+    User.create(email_address: "John.Doe@EXAMPLE.com", username: "JohnDoe123", password: "password123")
+    other_user = User.new(email_address: "john.doe@example.com", username: "JohnDoe345", password: "password123")
+
     assert_not other_user.valid?
     assert_equal other_user.errors[:email_address], [ "has already been taken" ]
   end
 
+  test "username must be unique" do
+    existing_user = users(:one)
+    user = User.new(email_address: "new.email.123@example.com", username: existing_user.username, password: "password123")
+
+    assert_not user.valid?
+    assert_equal user.errors[:username], [ "has already been taken" ]
+  end
+
+  test "username is case in-sensitive unique" do
+    existing_user = users(:one)
+    user = User.new(email_address: "new.email.123@example.com", username: existing_user.username.upcase, password: "password123")
+
+    assert_not user.valid?
+    assert_equal user.errors[:username], [ "has already been taken" ]
+  end
+
+  test "username must contain only letters and numbers" do
+    user = User.new(email_address: "john.doe@example.com", username: "JohnDoe123!", password: "password123")
+
+    assert_not user.valid?
+    assert_equal user.errors[:username], [ "must contain only letters and numbers" ]
+  end
+
+  test "username will be normalized to strip extra whitespace" do
+    user = User.new(email_address: "john.doe@example.com", username: "  \r\n  JohnDoe123 \n\r  ", password: "password123")
+
+    assert_equal(user.username, "JohnDoe123")
+  end
+
   test "password is required" do
-    user = User.new(email_address: "john.doe@example.com", password: "")
+    user = User.new(email_address: "john.doe@example.com", username: "JohnDoe123", password: "")
+
     assert_not user.valid?
     assert_equal user.errors[:password], [ "can't be blank", "is too short (minimum is 10 characters)" ]
   end
 
-  test "password musts be at least 10 characters" do
-    user = User.new(email_address: "john.doe@example.com", password: "aaaaaaaaa")
+  test "password must be at least 10 characters" do
+    user = User.new(email_address: "john.doe@example.com", username: "JohnDoe123", password: "aaaaaaaaa")
+
     assert_not user.valid?
     assert_equal user.errors[:password], [ "is too short (minimum is 10 characters)" ]
   end
 
   test "password must match password_confirmation" do
-    user = User.new(email_address: "john.doe@example.com", password: "password123", password_confirmation: "password456")
+    user = User.new(email_address: "john.doe@example.com", username: "JohnDoe123", password: "password123", password_confirmation: "password456")
+
     assert_not user.valid?
     assert_equal user.errors[:password_confirmation], [ "doesn't match Password" ]
   end

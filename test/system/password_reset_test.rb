@@ -5,7 +5,6 @@ class PasswordResetTest < ApplicationSystemTestCase
     visit new_password_url
 
     fill_in "Email", with: users(:confirmed).email_address
-
     click_on "Email reset instructions"
 
     assert_current_path new_session_url
@@ -18,7 +17,6 @@ class PasswordResetTest < ApplicationSystemTestCase
 
     fill_in "New Password", with: "new_password"
     fill_in "Confirm New Password", with: "new_password"
-
     click_on "Save New Password"
 
     assert_current_path new_session_url
@@ -38,7 +36,6 @@ class PasswordResetTest < ApplicationSystemTestCase
 
     fill_in "New Password", with: "new_password"
     fill_in "Confirm New Password", with: "NOT_new_password"
-
     click_on "Save New Password"
 
     assert_current_path edit_password_url(token)
