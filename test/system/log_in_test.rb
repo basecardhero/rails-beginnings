@@ -1,21 +1,7 @@
 require "application_system_test_case"
 
 class LogInTest < ApplicationSystemTestCase
-  test "a confirmed user can log in" do
-    visit new_session_url
-
-    user = users(:confirmed)
-    fill_in "Email", with: user.email_address
-    fill_in "Password", with: "password123"
-
-    click_on "Log in"
-
-    assert_current_path root_url
-    assert_text "Profile"
-    assert_text "Logout"
-  end
-
-  test "when an unconfirmed user attempts to log in, they will see an error message" do
+  test "a user can log in" do
     visit new_session_url
 
     user = users(:unconfirmed)
@@ -24,9 +10,9 @@ class LogInTest < ApplicationSystemTestCase
 
     click_on "Log in"
 
-    assert_current_path new_session_url
-
-    assert_text "You must confirm your email before you can log in"
+    assert_current_path root_url
+    assert_text "Profile"
+    assert_text "Logout"
   end
 
   test "when a invalid email or password are submitted, they will see an error message" do

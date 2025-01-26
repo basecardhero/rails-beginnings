@@ -28,4 +28,41 @@ class ProfileTest < ApplicationSystemTestCase
     assert_text "Email address has already been taken"
     assert_text "Username must contain only letters and numbers"
   end
+
+  test "an unconfirmed user cannot update their profile" do
+    user = users(:unconfirmed)
+    params = { email_address: "different.email@example.com", username: "DifferentUsername" }
+    sign_in_as(user)
+
+    visit profile_url
+    fill_in "Email", with: params[:email_address]
+    fill_in "Username", with: params[:username]
+    click_on "Update Profile"
+    user.reload
+
+    assert_current_path profile_url
+    assert_text "Email address not confirmed. Please check your email for a confirmation link."
+    assert_not_equal params[:username], user.username
+    assert_not_equal params[:email_address], user.email_address
+  end
+
+  test "an unconfirmed user will see 'Pending confirmation' on their profile" do
+    user = users(:unconfirmed)
+    sign_in_as(user)
+
+    visit profile_url
+
+    assert_current_path profile_url
+    assert_text "Pending confirmation"
+  end
+
+  test "a confirmed user will see email confirmation date on their profile" do
+    user = users(:one)
+    sign_in_as(user)
+
+    visit profile_url
+
+    assert_current_path profile_url
+    assert_text "Confirmed at #{user.confirmed_at.strftime('%m/%d/%Y')}"
+  end
 end
