@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
   layout "main"
+  before_action :require_email_confirmation, only: :update
 
   def index
   end

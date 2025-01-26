@@ -33,4 +33,18 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
   end
+
+  test "#update requires email confirmation" do
+    user = users(:unconfirmed)
+    sign_in(user)
+    params = { user: { email_address: "different.email@example.com", username: "DifferentUsername" } }
+
+    patch profile_url, params: params
+    user.reload()
+
+    assert_redirected_to profile_url
+    assert_equal "Email address not confirmed. Please check your email for a confirmation link.", flash[:alert]
+    assert_not_equal params[:user][:username], user.username
+    assert_not_equal params[:user][:email_address], user.email_address
+  end
 end
