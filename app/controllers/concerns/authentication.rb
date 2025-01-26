@@ -59,4 +59,10 @@ module Authentication
       Current.session.destroy
       cookies.delete(:session_id)
     end
+
+    def require_email_confirmation
+      return if authenticated? && current_user.confirmed_at.present?
+
+      redirect_to profile_path, alert: "Email address not confirmed. Please check your email for a confirmation link."
+    end
 end
