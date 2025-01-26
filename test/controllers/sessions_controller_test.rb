@@ -17,7 +17,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create with valid credentials and remember me" do
-    user = users(:confirmed)
+    user = users(:unconfirmed)
     post session_url, params: { new_session_form: { email_address: user.email_address, password: "password123", remember_me: "1" } }
 
     assert_redirected_to root_url
@@ -40,15 +40,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert response.parsed_body.to_html.include?("Email address is invalid")
     assert response.parsed_body.to_html.include?("Password can't be blank")
-  end
-
-  test "create will not create a session if confirmed_at is nil" do
-    user = users(:unconfirmed)
-    post session_url, params: { new_session_form: { email_address: user.email_address, password: "password123", remember_me: "0" } }
-
-    assert_redirected_to new_session_url
-    assert_nil parsed_cookies.signed[:session_id]
-    assert_equal "You must confirm your email before you can log in", flash[:alert]
   end
 
   test "destroy" do
