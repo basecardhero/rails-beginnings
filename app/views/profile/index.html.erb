@@ -1,0 +1,35 @@
+<div class="grid grid-cols-4 gap-4">
+  <div class="col-span-1">
+    <h1 class="text-1xl font-semibold">Profile</h1>
+  </div>
+
+  <div class="col-span-3">
+    <%= form_for current_user, url: profile_path do |form| %>
+      <div class="mb-6">
+        <%= form.label :email_address, "Email" %>
+        <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", value: current_user.email_address, class: "form-text" %>
+        
+        <% if current_user.errors[:email_address].any? %>
+          <p class="text-red-500 text-sm mt-1">
+            <%= current_user.errors.full_messages_for(:email_address).first %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :username, "Username" %>
+        <%= form.text_field :username, required: true, autofocus: false, autocomplete: "username", value: current_user.username, class: "form-text" %>
+
+        <% if current_user.errors[:username].any? %>
+          <p class="text-red-500 text-sm mt-1">
+            <%= current_user.errors.full_messages_for(:username).first %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="flex items-center justify-end">
+        <%= form.submit "Update Profile", class: "form-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>
