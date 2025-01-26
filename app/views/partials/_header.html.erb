@@ -1,0 +1,21 @@
+<header class="bg-white mb-16">
+  <nav class="border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+      <div class="flex">
+          <%= link_to "Rails Beginnings", root_path, class: "text-xl font-semibold" %>
+      </div>
+
+      <div class="flex">
+          <% if authenticated? %>
+              <%= link_to "Profile", profile_path, class: "mr-6 hover:underline" %>
+              <%= button_to "Logout", session_path, method: :delete, class: "hover:underline" %>
+          <% else %>
+              <%= link_to "Login", new_session_path, class: "mr-6 hover:underline" %>
+              <%= link_to "Register", new_registration_path, class: "hover:underline" %>
+          <% end %>
+      </div>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -14,4 +14,12 @@
   .form-link {
     @apply text-blue-600 hover:text-blue-700 underline;
   }
+
+  .notice {
+    @apply bg-green-200 text-green-800 block mb-6 p-4 shadow-sm rounded-md
+  }
+
+  .alert {
+    @apply bg-red-100 text-red-800 block mb-6 p-4
+  }
 }

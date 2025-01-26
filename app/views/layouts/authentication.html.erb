@@ -30,15 +30,9 @@
           <%= link_to "Rails Beginnings", root_path %>
         </h1>
 
-        <% if notice %>
-          <div id="notice" class="bg-green-200 text-green-800 block mb-4 p-4"><%= notice %></div>
-        <% end %>
+        <%= render "partials/flash" %>
 
-        <% if alert %>
-          <div id="alert" class="bg-red-100 text-red-800 block mb-4 p-4"><%= alert %></div>
-        <% end %>
-
-        <div class="bg-white px-6 py-5 overflow-hidden">
+        <div class="bg-white px-8 py-7 overflow-hidden shadow rounded-md">
           <%= yield %>
         </div>
       </div>
