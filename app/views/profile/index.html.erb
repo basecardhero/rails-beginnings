@@ -6,9 +6,17 @@
   <div class="col-span-3">
     <%= form_for current_user, url: profile_path do |form| %>
       <div class="mb-6">
-        <%= form.label :email_address, "Email" %>
+        <div class="flex items-center justify-between">
+          <%= form.label :email_address, "Email" %>
+
+          <% if current_user.confirmed_at.present? %>
+            <span title="<%= current_user.confirmed_at %>" class="text-gray-500 text-sm mt-1">Confirmed at <%= current_user.confirmed_at.strftime('%m/%d/%Y') %></span>
+          <% else %>
+            <span class="text-red-500 text-sm mt-1">Pending confirmation</p>
+          <% end %>
+        </div>
         <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", value: current_user.email_address, class: "form-text" %>
-        
+
         <% if current_user.errors[:email_address].any? %>
           <p class="text-red-500 text-sm mt-1">
             <%= current_user.errors.full_messages_for(:email_address).first %>

@@ -45,4 +45,24 @@ class ProfileTest < ApplicationSystemTestCase
     assert_not_equal params[:username], user.username
     assert_not_equal params[:email_address], user.email_address
   end
+
+  test "an unconfirmed user will see 'Pending confirmation' on their profile" do
+    user = users(:unconfirmed)
+    sign_in_as(user)
+
+    visit profile_url
+
+    assert_current_path profile_url
+    assert_text "Pending confirmation"
+  end
+
+  test "a confirmed user will see email confirmation date on their profile" do
+    user = users(:one)
+    sign_in_as(user)
+
+    visit profile_url
+
+    assert_current_path profile_url
+    assert_text "Confirmed at #{user.confirmed_at.strftime('%m/%d/%Y')}"
+  end
 end
