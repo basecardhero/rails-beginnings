@@ -1,10 +1,14 @@
-<% content_for :content do %>
-  <div class="w-full max-w-4xl mx-auto">
-    <%= render "partials/flash" %>
+<% content_for :navigation do %>
+  <%= render "partials/header" %>
+<% end %>
 
-    <div class="bg-white px-8 py-7 shadow-sm rounded-md">
+<% content_for :content do %>
+  <main class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+      <%= render "partials/flash" %>
       <%= yield %>
     </div>
-  </div>
+  </main>
 <% end %>
+
 <%= render template: "layouts/application" %>

@@ -1,9 +1,14 @@
-<div class="grid grid-cols-4 gap-4">
-  <div class="col-span-1">
-    <h1 class="text-1xl font-semibold">Profile</h1>
+<div class="md:grid md:grid-cols-6 md:gap-4 p-4 sm:p-8 bg-white shadow sm:rounded-md">
+  <div class="col-span-2 mb-8 md:mb-0">
+    <h2 class="text-lg font-medium text-gray-900">
+      Profile Information
+    </h2>
+    <p class="mt-1 text-sm text-gray-600">
+      Update your account's username.
+    </p>
   </div>
 
-  <div class="col-span-3">
+  <div class="col-span-4 lg:col-span-3">
     <%= form_for current_user, url: profile_path do |form| %>
       <div class="mb-6">
         <div class="flex items-center justify-between">
