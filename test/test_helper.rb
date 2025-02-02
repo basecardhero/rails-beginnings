@@ -14,9 +14,9 @@ module ActiveSupport
     #
     # @param user [User, Symbol] the user to sign in, or a symbol representing a user fixture
     # @return [void]
-    def sign_in(user)
+    def sign_in_as(user, password: "password123")
       user = users(user) unless user.is_a? User
-      post session_path, params: { new_session_form: { email_address: user.email_address, password: "password123" } }
+      post session_path, params: { new_session_form: { email_address: user.email_address, password: } }
     end
 
     # Signs out the current user by deleting the session.
