@@ -2,9 +2,7 @@ require "application_system_test_case"
 
 class ProfileTest < ApplicationSystemTestCase
   test "a user can update their profile" do
-    user = users(:one)
-    sign_in_as(user)
-
+    sign_in_as(:confirmed)
     visit profile_url
     fill_in "Email", with: "john.doe.2@example.com"
     fill_in "Username", with: "JohnDoe2"
@@ -15,10 +13,9 @@ class ProfileTest < ApplicationSystemTestCase
   end
 
   test "a user sees an error message when they try to update their profile with invalid data" do
-    user = users(:one)
     existing_user = users(:confirmed)
-    sign_in_as(user)
 
+    sign_in_as(:one)
     visit profile_url
     fill_in "Email", with: existing_user.email_address
     fill_in "Username", with: "!!not_valid_username!!"
@@ -32,8 +29,8 @@ class ProfileTest < ApplicationSystemTestCase
   test "an unconfirmed user cannot update their profile" do
     user = users(:unconfirmed)
     params = { email_address: "different.email@example.com", username: "DifferentUsername" }
-    sign_in_as(user)
 
+    sign_in_as(user)
     visit profile_url
     fill_in "Email", with: params[:email_address]
     fill_in "Username", with: params[:username]
@@ -47,9 +44,7 @@ class ProfileTest < ApplicationSystemTestCase
   end
 
   test "an unconfirmed user will see 'Pending confirmation' on their profile" do
-    user = users(:unconfirmed)
-    sign_in_as(user)
-
+    sign_in_as(:unconfirmed)
     visit profile_url
 
     assert_current_path profile_url
@@ -57,9 +52,9 @@ class ProfileTest < ApplicationSystemTestCase
   end
 
   test "a confirmed user will see email confirmation date on their profile" do
-    user = users(:one)
-    sign_in_as(user)
+    user = users(:confirmed)
 
+    sign_in_as(user)
     visit profile_url
 
     assert_current_path profile_url

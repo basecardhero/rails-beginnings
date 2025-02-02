@@ -31,7 +31,7 @@
 
       <div class="mb-6">
         <%= form.label :username, "Username" %>
-        <%= form.text_field :username, required: true, autofocus: false, autocomplete: "username", value: current_user.username, class: "form-text" %>
+        <%= form.text_field :username, required: true, autocomplete: "username", value: current_user.username, class: "form-text" %>
 
         <% if current_user.errors[:username].any? %>
           <p class="text-red-500 text-sm mt-1">
@@ -42,6 +42,58 @@
 
       <div class="flex items-center justify-end">
         <%= form.submit "Update Profile", class: "form-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="md:grid md:grid-cols-6 md:gap-4 p-4 sm:p-8 bg-white shadow sm:rounded-md">
+  <div class="col-span-2 mb-8 md:mb-0">
+    <h2 class="text-lg font-medium text-gray-900">
+      Change Password
+    </h2>
+    <p class="mt-1 text-sm text-gray-600">
+      Change your password.
+    </p>
+  </div>
+
+  <div class="col-span-4 lg:col-span-3">
+    <%= form_for current_user, url: profile_password_path do |form| %>
+      <div class="mb-6">
+        <%= form.label :password, "New password" %>
+        <%= form.password_field :password, required: true, class: "form-text" %>
+
+        <% if current_user.errors[:password].any? %>
+          <p class="text-red-500 text-sm mt-1">
+            <%= current_user.errors.full_messages_for(:password).first %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :password_confirmation, "Confirm new password" %>
+        <%= form.password_field :password_confirmation, required: true, class: "form-text" %>
+
+        <% if current_user.errors[:password_confirmation].any? %>
+          <p class="text-red-500 text-sm mt-1">
+            <%= current_user.errors.full_messages_for(:password_confirmation).first %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :current_password, "Current password" %>
+        <%= form.password_field :current_password, required: true, class: "form-text" %>
+
+        <% if current_user.errors[:current_password].any? %>
+          <p class="text-red-500 text-sm mt-1">
+            <%= current_user.errors.full_messages_for(:current_password).first %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="flex items-center justify-end">
+        <%= form.submit "Change Password", class: "form-button" %>
       </div>
     <% end %>
   </div>
