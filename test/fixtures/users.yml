@@ -10,3 +10,9 @@ unconfirmed:
   email_address: unconfirmed@example.com
   username: "UnconfirmedUser"
   password_digest: <%= password_digest %>
+
+johndoe:
+  email_address: john.doe@example.com
+  username: "JohnDoe123"
+  password_digest: <%= password_digest %>
+  confirmed_at: <%= Time.current %>

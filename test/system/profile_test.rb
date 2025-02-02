@@ -13,7 +13,7 @@ class ProfileTest < ApplicationSystemTestCase
   end
 
   test "a user sees an error message when they try to update their profile with invalid data" do
-    existing_user = users(:confirmed)
+    existing_user = users(:johndoe)
 
     sign_in_as(:confirmed)
     visit profile_url
