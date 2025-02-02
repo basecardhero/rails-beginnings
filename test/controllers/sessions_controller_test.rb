@@ -3,6 +3,7 @@ require "test_helper"
 class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "new" do
     get new_session_url
+
     assert_response :success
   end
 
@@ -30,7 +31,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     post session_url, params: { new_session_form: { email_address: "one@example.com", password: "wrong" } }
 
     assert_redirected_to new_session_url
-    assert_nil parsed_cookies.signed[:session_id]
+    assert_not parsed_cookies.key? :session_id
     assert_equal "Invalid email or password.", flash[:alert]
   end
 
@@ -43,7 +44,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "destroy" do
-    sign_in :confirmed
+    sign_in_as(:unconfirmed)
 
     delete session_url
 

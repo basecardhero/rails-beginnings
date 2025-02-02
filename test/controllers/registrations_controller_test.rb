@@ -3,6 +3,7 @@ require "test_helper"
 class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
     get new_registration_url
+
     assert_response :success
   end
 
@@ -32,6 +33,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
           password_confirmation: "password123"
         }
       }
+
     assert_response :unprocessable_entity
     assert response.body.include?("Email address is invalid")
   end
@@ -44,6 +46,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
           password_confirmation: "password123"
         }
       }
+
     assert_response :unprocessable_entity
     assert response.body.include?("Username is too short (minimum is 7 characters)")
   end
@@ -56,6 +59,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
           password_confirmation: "password123"
         }
       }
+
     assert_response :unprocessable_entity
     assert response.body.include?("Password is too short (minimum is 10 characters)")
   end
@@ -68,13 +72,15 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
           password_confirmation: "123password"
         }
       }
+
     assert_response :unprocessable_entity
     assert response.parsed_body.to_html.include?("Password confirmation doesn't match Password")
   end
 
   test "confirm a successful email confirmation" do
-    user = users(:one)
+    user = users(:confirmed)
     orignal_confirmed_at = user.confirmed_at
+
     get confirm_registrations_url(user.generate_token_for(:email_confirmation))
 
     assert_redirected_to new_session_url

@@ -13,8 +13,8 @@ class PasswordResetTest < ApplicationSystemTestCase
 
   test "a user can reset their password when they have a valid token" do
     user = users(:confirmed)
-    visit edit_password_url(user.generate_token_for(:password_reset))
 
+    visit edit_password_url(user.generate_token_for(:password_reset))
     fill_in "New Password", with: "new_password"
     fill_in "Confirm New Password", with: "new_password"
     click_on "Save New Password"
@@ -32,8 +32,8 @@ class PasswordResetTest < ApplicationSystemTestCase
 
   test "a user cannot reset their password when the password and password confirmation does not match" do
     token = users(:confirmed).generate_token_for(:password_reset)
-    visit edit_password_url(token)
 
+    visit edit_password_url(token)
     fill_in "New Password", with: "new_password"
     fill_in "Confirm New Password", with: "NOT_new_password"
     click_on "Save New Password"
