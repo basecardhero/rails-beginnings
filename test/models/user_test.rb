@@ -31,7 +31,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "username must be unique" do
-    existing_user = users(:one)
+    existing_user = users(:confirmed)
     user = User.new(email_address: "new.email.123@example.com", username: existing_user.username, password: "password123")
 
     assert_not user.valid?
@@ -39,7 +39,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "username is case in-sensitive unique" do
-    existing_user = users(:one)
+    existing_user = users(:confirmed)
     user = User.new(email_address: "new.email.123@example.com", username: existing_user.username.upcase, password: "password123")
 
     assert_not user.valid?
@@ -81,14 +81,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "generates_token_for email_confirmation will return the user for a valid token" do
-    user = users(:one)
+    user = users(:confirmed)
     token = user.generate_token_for(:email_confirmation)
 
     assert_equal user.id, User.find_by_token_for(:email_confirmation, token).id
   end
 
   test "generates_token_for email_confirmation will not work if confirmed_at has changed" do
-    user = users(:one)
+    user = users(:confirmed)
     token = user.generate_token_for(:email_confirmation)
     user.update(confirmed_at: Time.current)
 
@@ -96,7 +96,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "generates_token_for email_confirmation will not work if token is expired" do
-    user = users(:one)
+    user = users(:confirmed)
     token = user.generate_token_for(:email_confirmation)
 
     travel_to Time.current + 2.days do

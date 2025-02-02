@@ -4,7 +4,7 @@ class UserMailerTest < ActionMailer::TestCase
   include Rails.application.routes.url_helpers
 
   test "confirm_email" do
-    @user = users(:one)
+    @user = users(:confirmed)
     mail = UserMailer.confirm_email(@user)
 
     assert_emails 1 do

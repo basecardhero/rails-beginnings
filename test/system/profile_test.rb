@@ -15,7 +15,7 @@ class ProfileTest < ApplicationSystemTestCase
   test "a user sees an error message when they try to update their profile with invalid data" do
     existing_user = users(:confirmed)
 
-    sign_in_as(:one)
+    sign_in_as(:confirmed)
     visit profile_url
     fill_in "Email", with: existing_user.email_address
     fill_in "Username", with: "!!not_valid_username!!"

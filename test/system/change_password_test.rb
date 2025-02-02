@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class ChangePasswordTest < ApplicationSystemTestCase
   test "a user can change their password" do
-    sign_in_as(:one)
+    sign_in_as(:confirmed)
 
     visit profile_url
     fill_in "Current password", with: "password123"
@@ -14,7 +14,7 @@ class ChangePasswordTest < ApplicationSystemTestCase
   end
 
   test "a user sees an error message when they try to change their password with invalid password confirmation" do
-    sign_in_as(:one)
+    sign_in_as(:confirmed)
 
     visit profile_url
     fill_in "New password", with: "newpassword"
@@ -26,7 +26,7 @@ class ChangePasswordTest < ApplicationSystemTestCase
   end
 
   test "a user sees an error message when they try to change their password with invalid current password" do
-    sign_in_as(:one)
+    sign_in_as(:confirmed)
 
     visit profile_url
     fill_in "New password", with: "newpassword"

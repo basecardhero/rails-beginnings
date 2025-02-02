@@ -4,7 +4,7 @@ class PasswordsMailerTest < ActionMailer::TestCase
   include Rails.application.routes.url_helpers
 
   test "reset" do
-    user = users(:one)
+    user = users(:confirmed)
     email = PasswordsMailer.reset(user)
 
     assert_emails 1 do
