@@ -11,8 +11,8 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_emails 1 do
       post registrations_url, params: {
         user: {
-          email_address: "john.doe.123@example.com",
-          username: "JohnDoe123",
+          email_address: "new.user@example.com",
+          username: "NewUser123",
           password: "password123",
           password_confirmation: "password123"
         }
@@ -21,14 +21,14 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to new_session_url
     assert_equal "You have successfully registered! Please check your email to confirm your email address.", flash[:notice]
-    assert_not_nil User.find_by(email_address: "john.doe.123@example.com")
+    assert_not_nil User.find_by(email_address: "new.user@example.com")
   end
 
   test "should show an error message when email address is invalid" do
     post registrations_url, params: {
         user: {
-          email_address: "john.doe.123",
-          username: "JohnDoe123",
+          email_address: "new.user",
+          username: "NewUser123",
           password: "password123",
           password_confirmation: "password123"
         }
@@ -41,7 +41,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "should show an error message when username is invalid" do
     post registrations_url, params: {
         user: {
-          email_address: "john.doe.123@example.com",
+          email_address: "new.user@example.com",
           password: "password123",
           password_confirmation: "password123"
         }
@@ -54,7 +54,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "should show an error message when password is invalid" do
     post registrations_url, params: {
         user: {
-          email_address: "john.doe.123@example.com",
+          email_address: "new.user@example.com",
           password: "password",
           password_confirmation: "password123"
         }
@@ -67,7 +67,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "should show an error message when password_confirmation is invalid" do
     post registrations_url, params: {
         user: {
-          email_address: "john.doe.123@example.com",
+          email_address: "new.user@example.com",
           password: "password123",
           password_confirmation: "123password"
         }
