@@ -51,7 +51,9 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
     params = { user: { password: "newpassword", password_confirmation: "newpassword", current_password: "password123" } }
 
     sign_in_as(user)
-    patch profile_password_url, params: params
+    assert_enqueued_emails 1 do
+      patch profile_password_url, params: params
+    end
 
     assert_redirected_to profile_url
     assert_equal "Password updated", flash[:notice]

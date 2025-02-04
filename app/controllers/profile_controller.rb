@@ -22,6 +22,8 @@ class ProfileController < ApplicationController
       return render :index, status: :unprocessable_entity
     end
 
+    PasswordsMailer.changed(current_user).deliver_later
+
     redirect_to profile_path, notice: "Password updated"
   end
 
