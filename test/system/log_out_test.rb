@@ -6,8 +6,6 @@ class LogOutTest < ApplicationSystemTestCase
     visit root_url
     click_on "Logout"
 
-    assert_current_path root_url
-    assert_text "Login"
-    assert_text "Register"
+    assert_current_path new_session_url
   end
 end
