@@ -8,7 +8,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "an email can be submitted for password reset" do
-    user = users(:one)
+    user = users(:confirmed)
 
     assert_emails 1 do
       post passwords_url, params: { email_address: user.email_address }
@@ -26,7 +26,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "get edit" do
-    user = users(:one)
+    user = users(:confirmed)
 
     get edit_password_url(user.password_reset_token)
 
@@ -36,6 +36,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test "a password can be updated" do
     user = users(:confirmed)
     old_confirmed_at = user.confirmed_at
+
     patch password_url(user.password_reset_token), params: { user: { password: "newpassword", password_confirmation: "newpassword" } }
 
     assert_redirected_to new_session_url
@@ -45,7 +46,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "a password cannot be updated with invalid token" do
-    user = users(:one)
+    user = users(:confirmed)
 
     patch password_url("invalidtoken"), params: { user: { password: "newpassword", password_confirmation: "newpassword" } }
 
@@ -55,7 +56,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "the password field will display error message if invalid" do
-    user = users(:one)
+    user = users(:confirmed)
 
     patch password_url(user.password_reset_token), params: { user: { password: "123123", password_confirmation: "newpassword" } }
 
@@ -64,7 +65,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "password confirmation will display error message if invalid" do
-    user = users(:one)
+    user = users(:confirmed)
 
     patch password_url(user.password_reset_token), params: { user: { password: "newpassword", password_confirmation: "newpassword2" } }
 

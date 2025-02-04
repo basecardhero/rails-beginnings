@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get "profile" => "profile#index", as: :profile
   patch "profile" => "profile#update"
+  patch "profile/password" => "profile#update_password", as: :profile_password
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

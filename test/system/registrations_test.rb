@@ -4,8 +4,8 @@ class RegistrationsTest < ApplicationSystemTestCase
   test "registering a new user" do
     visit new_registration_url
 
-    fill_in "Email", with: "john.doe@example.com"
-    fill_in "Username", with: "JohnDoe123"
+    fill_in "Email", with: "new.user@example.com"
+    fill_in "Username", with: "NewUser123"
     fill_in "Password", with: "password123"
     fill_in "Confirm password", with: "password123"
 
@@ -18,8 +18,8 @@ class RegistrationsTest < ApplicationSystemTestCase
   test "when password and password confirmation do not match, it will display the error message" do
     visit new_registration_url
 
-    fill_in "Email", with: "john.doe@example.com"
-    fill_in "Username", with: "JohnDoe123"
+    fill_in "Email", with: "new.user@example.com"
+    fill_in "Username", with: "NewUser123"
     fill_in "Password", with: "password123"
     fill_in "Confirm password", with: "NOT_password123"
 
@@ -33,7 +33,7 @@ class RegistrationsTest < ApplicationSystemTestCase
     visit new_registration_url
 
     fill_in "Email", with: users(:confirmed).email_address
-    fill_in "Username", with: "JohnDoe123"
+    fill_in "Username", with: "NewUser123"
     fill_in "Password", with: "password123"
     fill_in "Confirm password", with: "password123"
 
@@ -46,7 +46,7 @@ class RegistrationsTest < ApplicationSystemTestCase
   test "when an existing username is used, it will display the error message" do
     visit new_registration_url
 
-    fill_in "Email", with: "john.doe@example.com"
+    fill_in "Email", with: "new.user@example.com"
     fill_in "Username", with: users(:confirmed).username
     fill_in "Password", with: "password123"
     fill_in "Confirm password", with: "password123"

@@ -52,4 +52,7 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   routes.default_url_options[:host] = "example.com"
+
+  # Set the minimum cost for BCrypt.
+  BCrypt::Engine.cost = BCrypt::Engine::MIN_COST
 end
