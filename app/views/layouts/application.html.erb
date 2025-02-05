@@ -19,7 +19,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-gray-50 font-sans text-gray-900 antialiased">
+  <body class="bg-gray-50 font-mono text-gray-900 antialiased">
     <%= yield :navigation %>
     <%= content_for?(:content) ? yield(:content) : yield %>
   </body>
