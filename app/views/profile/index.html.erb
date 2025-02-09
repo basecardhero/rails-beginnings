@@ -11,25 +11,6 @@
   <div class="col-span-4 lg:col-span-3">
     <%= form_for current_user, url: profile_path do |form| %>
       <div class="mb-6">
-        <div class="flex items-center justify-between">
-          <%= form.label :email_address, "Email" %>
-
-          <% if current_user.confirmed_at.present? %>
-            <span title="<%= current_user.confirmed_at %>" class="text-gray-500 text-sm mt-1">Confirmed at <%= current_user.confirmed_at.strftime('%m/%d/%Y') %></span>
-          <% else %>
-            <span class="text-red-500 text-sm mt-1">Pending confirmation</p>
-          <% end %>
-        </div>
-        <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", value: current_user.email_address, class: "form-text" %>
-
-        <% if current_user.errors[:email_address].any? %>
-          <p class="text-red-500 text-sm mt-1">
-            <%= current_user.errors.full_messages_for(:email_address).first %>
-          </p>
-        <% end %>
-      </div>
-
-      <div class="mb-6">
         <%= form.label :username, "Username" %>
         <%= form.text_field :username, required: true, autocomplete: "username", value: current_user.username, class: "form-text" %>
 
@@ -42,6 +23,42 @@
 
       <div class="flex items-center justify-end">
         <%= form.submit "Update Profile", class: "form-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="md:grid md:grid-cols-6 md:gap-4 p-4 sm:p-8 bg-white shadow sm:rounded-md">
+  <div class="col-span-2 mb-8 md:mb-0">
+    <h2 class="text-lg font-medium text-gray-900">
+      Change Email
+    </h2>
+    <p class="mt-1 text-sm text-gray-600">
+      This will require confirming your new email address.
+    </p>
+  </div>
+
+  <div class="col-span-4 lg:col-span-3">
+    <%= form_for current_user, url: profile_email_path do |form| %>
+      <div class="mb-6">
+        <div class="flex items-center justify-between">
+          <%= form.label :email_address, "Email" %>
+
+          <% if current_user.confirmed_at.present? %>
+            <span title="<%= current_user.confirmed_at %>" class="text-gray-500 text-sm mt-1">Confirmed at <%= current_user.confirmed_at.strftime('%m/%d/%Y') %></span>
+          <% end %>
+        </div>
+        <%= form.text_field :email_address, required: true, autofocus: false, autocomplete: "email", value: current_user.email_address, class: "form-text" %>
+
+        <% if current_user.errors[:email_address].any? %>
+          <p class="text-red-500 text-sm mt-1">
+            <%= current_user.errors.full_messages_for(:email_address).first %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="flex items-center justify-end">
+        <%= form.submit "Change Email", class: "form-button" %>
       </div>
     <% end %>
   </div>
