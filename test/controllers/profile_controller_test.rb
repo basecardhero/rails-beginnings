@@ -11,7 +11,7 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
 
   test "#update updates the user" do
     user = users(:confirmed)
-    params = { user: { username: "newusername", email_address: "new.email@example.com" } }
+    params = { user: { username: "newusername" } }
 
     sign_in_as(user)
     patch profile_url, params: params
@@ -20,11 +20,10 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to profile_url
     assert_equal "Profile updated", flash[:notice]
     assert_equal params[:user][:username], user.username
-    assert_equal params[:user][:email_address], user.email_address
   end
 
   test "#update with render :index when user is invalid" do
-    params = { user: { email_address: "new.email@example.com" } }
+    params = { user: { username: "bad.username!" } }
 
     sign_in_as(:confirmed)
     patch profile_url, params: params
@@ -34,7 +33,7 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
 
   test "#update requires email confirmation" do
     user = users(:unconfirmed)
-    params = { user: { email_address: "different.email@example.com", username: "DifferentUsername" } }
+    params = { user: { username: "DifferentUsername" } }
 
     sign_in_as(user)
     patch profile_url, params: params
@@ -43,7 +42,39 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to profile_url
     assert_equal "Email address not confirmed. Please check your email for a confirmation link.", flash[:alert]
     assert_not_equal params[:user][:username], user.username
-    assert_not_equal params[:user][:email_address], user.email_address
+  end
+
+  test "#update_email updates the user's email address" do
+    user = users(:confirmed)
+    params = { user: { email_address: "new.email@example.com" } }
+
+    sign_in_as(user)
+    patch profile_email_url, params: params
+
+    assert_redirected_to profile_url
+    assert_equal "Email address updated", flash[:notice]
+    assert_equal params[:user][:email_address], user.reload.email_address
+  end
+
+  test "#update_email with render :index when user is invalid" do
+    params = { user: { email_address: "" } }
+
+    sign_in_as(:confirmed)
+    patch profile_email_url, params: params
+
+    assert_response :unprocessable_entity
+  end
+
+  test "#update_email requires confirmed email" do
+  user = users(:unconfirmed)
+  params = { user: { email_address: "new.email@example.com" } }
+
+  sign_in_as(user)
+  patch profile_email_url, params: params
+
+  assert_redirected_to profile_url
+  assert_equal "Email address not confirmed. Please check your email for a confirmation link.", flash[:alert]
+  assert_not_equal params[:user][:email_address], user.reload.email_address
   end
 
   test "#update_password updates the user's password" do
