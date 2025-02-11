@@ -77,6 +77,26 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
   assert_not_equal params[:user][:email_address], user.reload.email_address
   end
 
+  test "#send_email_confirmation sends a confirmation email" do
+    sign_in_as(:unconfirmed)
+    assert_enqueued_emails 1 do
+      patch profile_send_email_confirmation_url
+    end
+
+    assert_redirected_to profile_url
+    assert_equal "Confirmation email sent. Please check your email.", flash[:notice]
+  end
+
+  test "#send_email_confirmation does not send a confirmation email if the email is already confirmed" do
+    sign_in_as(:confirmed)
+    assert_no_enqueued_emails do
+      patch profile_send_email_confirmation_url
+    end
+
+    assert_redirected_to profile_url
+    assert_equal "Email address already confirmed.", flash[:alert]
+  end
+
   test "#update_password updates the user's password" do
     user = users(:confirmed)
     params = { user: { password: "newpassword", password_confirmation: "newpassword", current_password: "password123" } }

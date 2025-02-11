@@ -20,6 +20,16 @@ class ProfileController < ApplicationController
     end
   end
 
+  def send_email_confirmation
+    if current_user.confirmed_at?
+      return redirect_to profile_path, alert: "Email address already confirmed."
+    end
+
+    UserMailer.confirm_email(current_user).deliver_later
+
+    redirect_to profile_path, notice: "Confirmation email sent. Please check your email."
+  end
+
   def update_password
     unless current_user.authenticate(params[:user][:current_password])
       current_user.errors.add(:current_password, "is incorrect")
