@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   patch "profile" => "profile#update"
   patch "profile/password" => "profile#update_password", as: :profile_password
   patch "profile/email" => "profile#update_email", as: :profile_email
+  patch "profile/email/send_confirmation" => "profile#send_email_confirmation", as: :profile_send_email_confirmation
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

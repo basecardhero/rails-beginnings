@@ -50,4 +50,13 @@ class ProfileTest < ApplicationSystemTestCase
     assert_current_path profile_url
     assert_text "Email address is invalid"
   end
+
+  test "an unconfirmed user can request a new confirmation email" do
+    sign_in_as(:unconfirmed)
+    visit profile_url
+    click_on "Resend confirmation email"
+
+    assert_current_path profile_url
+    assert_text "Confirmation email sent. Please check your email."
+  end
 end
