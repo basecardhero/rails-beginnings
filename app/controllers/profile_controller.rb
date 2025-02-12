@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
   before_action :require_email_confirmation, only: [ :update, :update_email ]
+  rate_limit to: 5, within: 3.minutes, only: :update_email, with: -> { redirect_to profile_url, alert: "Try again later." }
 
   def index
   end
@@ -14,7 +15,12 @@ class ProfileController < ApplicationController
 
   def update_email
     if current_user.update(update_email_params)
-      redirect_to profile_path, notice: "Email address updated"
+      if current_user.email_address_previously_changed?
+        current_user.update_column(:confirmed_at, nil)
+        UserMailer.confirm_email(current_user).deliver_later
+
+        redirect_to profile_path, notice: "Email address updated"
+      end
     else
       render :index, status: :unprocessable_entity
     end

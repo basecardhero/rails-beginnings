@@ -49,11 +49,15 @@ class ProfileControllerTest < ActionDispatch::IntegrationTest
     params = { user: { email_address: "new.email@example.com" } }
 
     sign_in_as(user)
-    patch profile_email_url, params: params
+    assert_enqueued_emails 1 do
+      patch profile_email_url, params: params
+    end
 
+    user.reload
     assert_redirected_to profile_url
     assert_equal "Email address updated", flash[:notice]
-    assert_equal params[:user][:email_address], user.reload.email_address
+    assert_equal params[:user][:email_address], user.email_address
+    assert_nil user.confirmed_at
   end
 
   test "#update_email with render :index when user is invalid" do
