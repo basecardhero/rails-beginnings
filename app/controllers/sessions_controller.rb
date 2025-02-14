@@ -23,7 +23,6 @@ class SessionsController < ApplicationController
 
   def destroy
     terminate_session
-    clear_site_data
     redirect_to new_session_path
   end
 
@@ -37,9 +36,5 @@ class SessionsController < ApplicationController
     return false unless params[:new_session_form].key?(:remember_me)
 
     params[:new_session_form][:remember_me] == "1"
-  end
-
-  def clear_site_data
-    response.headers["Clear-Site-Data"] = '"cache","storage"'
   end
 end
