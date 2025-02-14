@@ -1,6 +1,7 @@
 class ProfileController < ApplicationController
   before_action :require_email_confirmation, only: [ :update, :update_email ]
-  rate_limit to: 5, within: 3.minutes, only: :update_email, with: -> { redirect_to profile_url, alert: "Try again later." }
+  rate_limit to: 5, within: 3.minutes, only: [ :update_email, :send_email_confirmation, :update_password ],
+             with: -> { redirect_to profile_url, alert: "Try again later." }
 
   def index
   end
