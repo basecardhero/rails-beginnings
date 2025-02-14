@@ -69,6 +69,14 @@ To run Brakeman
 bin/brakeman --no-pager
 ```
 
+#### Annotation
+This project uses [annotaterb](https://github.com/drwl/annotaterb) gem to annotate models for documentation.
+
+If database changes occurr, run the following to update the model annotation.
+```
+bundle exec annotaterb models --exclude
+```
+
 ## Deployment
 
 This will eventually use [Kamal](https://kamal-deploy.org/).
