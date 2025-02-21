@@ -20,6 +20,7 @@ class PasswordsController < ApplicationController
 
   def update
     if @user.update(update_password_params.merge(confirmed_at: Time.current))
+      @user.sessions.destroy_all
       return redirect_to new_session_path, notice: "Your password has been reset. You may now log in."
     end
 

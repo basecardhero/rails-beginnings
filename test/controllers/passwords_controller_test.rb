@@ -45,6 +45,15 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal old_confirmed_at, user.reload.confirmed_at
   end
 
+  test "the users sessions are destroyed when the password is updated" do
+    user = users(:confirmed)
+    user.sessions.create
+
+    patch password_url(user.password_reset_token), params: { user: { password: "newpassword", password_confirmation: "newpassword" } }
+
+    assert_empty user.reload.sessions
+  end
+
   test "a password cannot be updated with invalid token" do
     user = users(:confirmed)
 
